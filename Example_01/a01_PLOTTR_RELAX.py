@@ -156,6 +156,8 @@ for nn in progressbar(particle_dict):
     velocity_dict[nn]   = velocity
     trajectory_dict[nn] = trajectory
 
+
+
 ##################
 # Generate plots #
 ##################

@@ -135,9 +135,9 @@ u0, v0    = 1.0, 1.0
 
 
 
-####################
-# Create particles #
-####################
+###################################################################################
+# Create particles and calculate the trajectories by using update method in class #
+###################################################################################
 
 particle1 = maxey_riley_fokas(1, np.array([x0, y0]),
                                  np.array([u0, v0]),
@@ -148,7 +148,16 @@ particle1 = maxey_riley_fokas(1, np.array([x0, y0]),
                                  particle_radius     = rad_p,
                                  kinematic_viscosity = nu_f,
                                  time_scale          = t_scale_v[0])
-    
+
+pos1_vec = np.array([x0, y0])
+q0_1_vec = np.array([u0, v0])
+for tt in progressbar(range(1, len(taxis1))):
+    particle1.update()
+    pos1_vec = np.vstack((pos1_vec, particle1.pos_vec[tt * (nodes_dt-1)]))
+    q0_1_vec = np.vstack((q0_1_vec, particle1.q_vec[tt * (nodes_dt-1)]))
+
+
+
 particle2 = maxey_riley_fokas(2, np.array([x0, y0]),
                                  np.array([u0, v0]),
                                  vel, N_fokas, tini, dt2,
@@ -159,22 +168,8 @@ particle2 = maxey_riley_fokas(2, np.array([x0, y0]),
                                  kinematic_viscosity = nu_f,
                                  time_scale          = t_scale_v[1])
 
-
-
-##############################################################
-# Calculate the trajectories by using update method in class #
-##############################################################
-
-pos1_vec = np.array([x0, y0])
-pos2_vec = np.array([x0, y0])
-q0_1_vec = np.array([u0, v0])
 q0_2_vec = np.array([u0, v0])
-for tt in progressbar(range(1, len(taxis1))):
-    particle1.update()
-    pos1_vec = np.vstack((pos1_vec, particle1.pos_vec[tt * (nodes_dt-1)]))
-    q0_1_vec = np.vstack((q0_1_vec, particle1.q_vec[tt * (nodes_dt-1)]))
-
-
+pos2_vec = np.array([x0, y0])
 for tt in progressbar(range(1, len(taxis2))):
     particle2.update()
     pos2_vec = np.vstack((pos2_vec, particle2.pos_vec[tt * (nodes_dt-1)]))

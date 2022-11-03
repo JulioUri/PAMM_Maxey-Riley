@@ -98,9 +98,9 @@ save_plot_to    = './02_VSUAL_OUTPUT/'
 # Initial time
 tini  = 0.0
 # Final time
-tend  = 80.0 #80.0
+tend  = 80.0
 # Time nodes (should be modulated as tend and tini change)
-nt    = 8001 #8001
+nt    = 8001
 
 
 # Create time vector
