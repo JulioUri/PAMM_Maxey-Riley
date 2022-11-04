@@ -105,7 +105,7 @@ class maxey_riley_fokas(object):
     
   # Calculation of L(m) function, used to obtain matrix M and then F.
   def Lm(self, m):
-        
+        '''
         fun_exp  = lambda k: -m * k**2.0
         fun_frac = lambda k: np.log( self.p.gamma * k**2.0 / ((k * self.p.gamma)**2.0 + (k**2.0 - self.p.alpha)**2.0))
             
@@ -124,6 +124,21 @@ class maxey_riley_fokas(object):
         coeff_int = cheb.chebint(coeff)
         
         result    = cheb.chebval(1.0, coeff_int) - cheb.chebval(-1.0, coeff_int)
+        '''
+        fun_exp  = lambda k: np.exp(-m * k**2.0)
+        fun_frac = lambda k: self.p.gamma * k**2.0 / \
+                    ((k * self.p.gamma)**2.0 + (k**2.0 - self.p.alpha)**2.0)
+            
+        fun      = lambda k: fun_exp(k) * fun_frac(k)
+        
+        fun_v    = np.array([])
+        for kk in range(0, len(self.k_v)):
+            fun_v = np.append(fun_v, fun(self.k_v[kk]))
+        
+        coeff     = cheb.chebfit(self.k_hat_v, fun_v, len(self.k_v)-1)
+        coeff_int = cheb.chebint(coeff)
+        
+        result   = cheb.chebval(1.0, coeff_int) - cheb.chebval(-1.0, coeff_int)
         
         return result
     
@@ -145,7 +160,31 @@ class maxey_riley_fokas(object):
             mat     = np.zeros([len(self.time_vec),len(self.time_vec)])
         
             for ii in progressbar(range(1,len(self.time_vec))):
+                for nn in range(0,len(self.time_vec)):
+                    # Create vector of coefficients to define Chebyshev Polynomial
+                    coeff      = np.zeros([1,len(self.time_vec)])[0]
                 
+                    # Fill in the element of the vector corresponding to the matrix entry
+                    coeff[nn]  = 1.0
+                
+                    # Change into Cheb polynomial
+                    poly       = cheb.Chebyshev(coeff)
+
+                    # Create function of full integrand of the matrix element
+                    fun        = lambda s: poly(s) * self.Lm(self.time_vec[ii]-s)
+                
+                    # integrate
+                    aux         = quad(fun, self.time_vec[0], self.time_vec[ii],
+                                   epsrel=1e-9, epsabs=1e-9, limit=1000,
+                                   points=[self.time_vec[ii]])
+                
+                    # fill in matrix
+                    mat[ii][nn] = aux[0]
+                
+                    # Display values
+                    #print('position [t_',ii,', T_',nn,']:',mat[ii][nn])
+                    #print('error:',aux[1])
+                '''
                 t_vec    = np.copy(self.time_vec[:(ii+1)])
                 Lm_vec   = np.array([])
                 for elem in range(0, ii+1):
@@ -175,6 +214,7 @@ class maxey_riley_fokas(object):
                     # Display values
                     #print('position [t_',ii,', T_',nn,']:',mat[ii][nn])
                     #print('error:',aux[1])
+                    '''
         
             with open(name_file, 'wb') as file:
                 np.save(file, mat)
