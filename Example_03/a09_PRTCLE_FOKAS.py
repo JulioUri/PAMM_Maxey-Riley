@@ -105,7 +105,7 @@ class maxey_riley_fokas(object):
     
   # Calculation of L(m) function, used to obtain matrix M and then F.
   def Lm(self, m):
-        '''
+        
         fun_exp  = lambda k: -m * k**2.0
         fun_frac = lambda k: np.log( self.p.gamma * k**2.0 / ((k * self.p.gamma)**2.0 + (k**2.0 - self.p.alpha)**2.0))
             
@@ -114,7 +114,7 @@ class maxey_riley_fokas(object):
         
         fun_v    = np.array([])
         for kk in range(0, len(self.k_v)):
-            if self.k_v[kk] >= 1e-8:
+            if self.k_v[kk] >= 1e-14:
                 fun_v = np.append(fun_v, fun(self.k_v[kk]))
             else:
                 fun_v = np.append(fun_v, 0.0)
@@ -139,7 +139,7 @@ class maxey_riley_fokas(object):
         coeff_int = cheb.chebint(coeff)
         
         result   = cheb.chebval(1.0, coeff_int) - cheb.chebval(-1.0, coeff_int)
-        
+        '''
         return result
     
   # Calculation of Matrix M
@@ -160,6 +160,7 @@ class maxey_riley_fokas(object):
             mat     = np.zeros([len(self.time_vec),len(self.time_vec)])
         
             for ii in progressbar(range(1,len(self.time_vec))):
+                '''
                 for nn in range(0,len(self.time_vec)):
                     # Create vector of coefficients to define Chebyshev Polynomial
                     coeff      = np.zeros([1,len(self.time_vec)])[0]
@@ -214,7 +215,7 @@ class maxey_riley_fokas(object):
                     # Display values
                     #print('position [t_',ii,', T_',nn,']:',mat[ii][nn])
                     #print('error:',aux[1])
-                    '''
+                    
         
             with open(name_file, 'wb') as file:
                 np.save(file, mat)
@@ -523,8 +524,8 @@ class maxey_riley_fokas(object):
         
         ####################### NEWTON-RAPHSON METHOD #######################
         #print("Initial guess: \n" + str(guess))
-        iter_limit = 10000
-        tolerance  = 1e-5
+        iter_limit = 20000
+        tolerance  = 1e-13
         
         try:
             
