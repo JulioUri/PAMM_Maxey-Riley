@@ -95,36 +95,17 @@ class maxey_riley_fokas(object):
                                       (1 - np.cos(jj * np.pi / (self.time_nodes-1))) )
             
             if self.time - self.t0 == 0.0:
-                x         = np.append(x, self.x)
-                y         = np.append(y, self.y)
+                x           = np.append(x, self.x)
+                y           = np.append(y, self.y)
             else:
-                x         = np.append(x, self.x[-1])
-                y         = np.append(y, self.y[-1])
+                x           = np.append(x, self.x[-1])
+                y           = np.append(y, self.y[-1])
             
         self.x0_v     = np.append(x, y)
     
   # Calculation of L(m) function, used to obtain matrix M and then F.
   def Lm(self, m):
         
-        fun_exp  = lambda k: -m * k**2.0
-        fun_frac = lambda k: np.log( self.p.gamma * k**2.0 / ((k * self.p.gamma)**2.0 + (k**2.0 - self.p.alpha)**2.0))
-            
-        fun      = lambda k: np.exp( fun_exp(k) + fun_frac(k) )
-        
-        
-        fun_v    = np.array([])
-        for kk in range(0, len(self.k_v)):
-            if self.k_v[kk] >= 1e-14:
-                fun_v = np.append(fun_v, fun(self.k_v[kk]))
-            else:
-                fun_v = np.append(fun_v, 0.0)
-                
-        
-        coeff     = cheb.chebfit(self.k_hat_v, fun_v, len(self.k_v) - 1)
-        coeff_int = cheb.chebint(coeff)
-        
-        result    = cheb.chebval(1.0, coeff_int) - cheb.chebval(-1.0, coeff_int)
-        '''
         fun_exp  = lambda k: np.exp(-m * k**2.0)
         fun_frac = lambda k: self.p.gamma * k**2.0 / \
                     ((k * self.p.gamma)**2.0 + (k**2.0 - self.p.alpha)**2.0)
@@ -139,7 +120,7 @@ class maxey_riley_fokas(object):
         coeff_int = cheb.chebint(coeff)
         
         result   = cheb.chebval(1.0, coeff_int) - cheb.chebval(-1.0, coeff_int)
-        '''
+        
         return result
     
   # Calculation of Matrix M
@@ -160,7 +141,7 @@ class maxey_riley_fokas(object):
             mat     = np.zeros([len(self.time_vec),len(self.time_vec)])
         
             for ii in progressbar(range(1,len(self.time_vec))):
-                '''
+                
                 for nn in range(0,len(self.time_vec)):
                     # Create vector of coefficients to define Chebyshev Polynomial
                     coeff      = np.zeros([1,len(self.time_vec)])[0]
@@ -185,37 +166,7 @@ class maxey_riley_fokas(object):
                     # Display values
                     #print('position [t_',ii,', T_',nn,']:',mat[ii][nn])
                     #print('error:',aux[1])
-                '''
-                t_vec    = np.copy(self.time_vec[:(ii+1)])
-                Lm_vec   = np.array([])
-                for elem in range(0, ii+1):
-                    Lm_vec     = np.append(Lm_vec, 
-                                           self.Lm(self.time_vec[ii] - \
-                                                   self.time_vec[elem]))
-                
-                Lm_coeff = cheb.chebfit(t_vec, Lm_vec, len(Lm_vec) - 1)
-                
-                for nn in range(0,len(self.time_vec)):
-                    # Create vector of coefficients to define Chebyshev Polynomial
-                    coeff      = np.zeros([1,len(self.time_vec)])[0]
-                
-                    # Fill in the element of the vector corresponding to the matrix entry
-                    coeff[nn]  = 1.0
-                    
-                    # Multiply
-                    mul_coeff   = cheb.chebmul(coeff, Lm_coeff)
-                    
-                    # Integrate
-                    coeff_int   = cheb.chebint(mul_coeff)
-                    aux         = cheb.chebval(self.time_vec[ii], coeff_int) - \
-                                  cheb.chebval( self.time_vec[0], coeff_int)
-                    
-                    mat[ii][nn] = aux
-                    
-                    # Display values
-                    #print('position [t_',ii,', T_',nn,']:',mat[ii][nn])
-                    #print('error:',aux[1])
-                    
+                                    
         
             with open(name_file, 'wb') as file:
                 np.save(file, mat)
@@ -322,8 +273,6 @@ class maxey_riley_fokas(object):
         return result_v.imag
     
   def G_update(self):
-        
-        #f_vec      = np.array([[],[]])
         
         f_tld_x_v      = np.array([])
         f_tld_y_v      = np.array([])
@@ -525,7 +474,7 @@ class maxey_riley_fokas(object):
         ####################### NEWTON-RAPHSON METHOD #######################
         #print("Initial guess: \n" + str(guess))
         iter_limit = 20000
-        tolerance  = 1e-13
+        tolerance  = 1e-7
         
         try:
             

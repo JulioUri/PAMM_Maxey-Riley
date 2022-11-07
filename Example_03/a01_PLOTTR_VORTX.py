@@ -100,7 +100,7 @@ tini  = 0.0
 # Final time
 tend  = 80.0
 # Time nodes (should be modulated as tend and tini change)
-nt    = 81
+nt    = 8001
 
 
 # Create time vector
@@ -151,7 +151,7 @@ vel     = velocity_field_Vortex()
 # This means that between any two time nodes, taxis[i] and taxis[ii],
 # we have 'nodes_dt' Chebyshev nodes. This is part of how the how
 # the method is defined.
-nodes_dt = 5#20  # DO NOT CHANGE (in principle)
+nodes_dt = 20  # DO NOT CHANGE (in principle)
 
 
 
@@ -170,7 +170,7 @@ N_fokas     = 101  # DO NOT CHANGE.
 # Decide whether to apply parallel computing #
 ##############################################
 
-parallel_flag = False #True
+parallel_flag = True
 if parallel_flag == True:
     number_cores  = int(mp.cpu_count())
 
@@ -183,7 +183,7 @@ if parallel_flag == True:
 # Vector of horizontal coordinate. As said, particles are placed
 # on the horizontal axis.
 x0_v   = np.array([])
-for ii in range(0,1): #5):
+for ii in range(0,5):
     x0   = 0.15 + 0.3 * ii
     x0_v = np.append(x0_v, x0)
 
@@ -292,10 +292,10 @@ fs = 9
 fig, axs = plt.subplots(1, 2, layout='tight')
 # Plot n° 1: Radial distance
 axs[0].plot(taxis, rad_dis_dict[0], '-', color='b', linewidth=1.5, label="0.15")
-# axs[0].plot(taxis, rad_dis_dict[1], '-', color='y', linewidth=1.5, label='0.45')
-# axs[0].plot(taxis, rad_dis_dict[2], '-', color='g', linewidth=1.5, label='0.75')
-# axs[0].plot(taxis, rad_dis_dict[3], '-', color='r', linewidth=1.5, label='1.05')
-# axs[0].plot(taxis, rad_dis_dict[4], '-', color='m', linewidth=1.5, label='1.35')
+axs[0].plot(taxis, rad_dis_dict[1], '-', color='y', linewidth=1.5, label='0.45')
+axs[0].plot(taxis, rad_dis_dict[2], '-', color='g', linewidth=1.5, label='0.75')
+axs[0].plot(taxis, rad_dis_dict[3], '-', color='r', linewidth=1.5, label='1.05')
+axs[0].plot(taxis, rad_dis_dict[4], '-', color='m', linewidth=1.5, label='1.35')
 line1 = np.linspace(1, tend, 101)
 axs[0].plot(line1, 0.5*line1**0.25, '-', color='k')
 axs[0].text(7, 0.45, "$t^{1/4}$", fontsize=fs)
@@ -312,10 +312,10 @@ axs[0].grid()
 
 # Plot n° 2: Radial velocity
 axs[1].plot(taxis, rad_vel_dict[0], '-', color='b', linewidth=1.5, label="0.15")
-# axs[1].plot(taxis, rad_vel_dict[1], '-', color='y', linewidth=1.5, label='0.45')
-# axs[1].plot(taxis, rad_vel_dict[2], '-', color='g', linewidth=1.5, label='0.75')
-# axs[1].plot(taxis, rad_vel_dict[3], '-', color='r', linewidth=1.5, label='1.05')
-# axs[1].plot(taxis, rad_vel_dict[4], '-', color='m', linewidth=1.5, label='1.35')
+axs[1].plot(taxis, rad_vel_dict[1], '-', color='y', linewidth=1.5, label='0.45')
+axs[1].plot(taxis, rad_vel_dict[2], '-', color='g', linewidth=1.5, label='0.75')
+axs[1].plot(taxis, rad_vel_dict[3], '-', color='r', linewidth=1.5, label='1.05')
+axs[1].plot(taxis, rad_vel_dict[4], '-', color='m', linewidth=1.5, label='1.35')
 line2 = np.linspace(1, tend, 101)
 axs[1].plot(line2, 0.5*line2**(-0.75), '-', color='k')
 axs[1].text(10, 0.15, "$t^{-3/4}$")
@@ -331,6 +331,8 @@ axs[1].legend(loc='upper right', fontsize=fs, prop={'size':fs-2})
 axs[1].grid()
 
 plt.savefig(save_plot_to + 'c01_FIGURE_VORTEX.pdf',
-            format='pdf', dpi=500, bbox_inches='tight')
+            format='pdf', dpi=1200, bbox_inches='tight')
+
+plt.show()
 
 print("\007")
