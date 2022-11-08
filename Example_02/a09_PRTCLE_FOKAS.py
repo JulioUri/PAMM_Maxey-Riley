@@ -475,7 +475,7 @@ class maxey_riley_fokas(object):
         ####################### NEWTON-RAPHSON METHOD #######################
         #print("Initial guess: \n" + str(guess))
         iter_limit = 1000
-        tolerance  = 1e-15
+        tolerance  = 1e-13
         
         try:
             
