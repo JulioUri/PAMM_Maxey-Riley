@@ -65,6 +65,8 @@ Please be aware that:
       file, whose class is imported.
 """
 
+print("This script could take up to 1.5 h... Grab a coffee and your favourite scientific paper.\n\n")
+
 ##################################
 # Define function to parallelise #
 ##################################
