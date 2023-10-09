@@ -1,5 +1,5 @@
 from a00_PMTERS_CONST import mr_parameter
-from scipy.optimize import newton
+from scipy.optimize import newton, fsolve, newton_krylov
 import numpy.polynomial.chebyshev as cheb
 import numpy as np
 from os.path import exists
@@ -440,20 +440,35 @@ class maxey_riley_fokas(object):
         
         ######################### NON-LINEAR SOLVER #########################
         #print("Initial guess: \n" + str(guess))
-        iter_limit = 10000
-        tolerance  = 1e-5
+        iter_limit = 5000
+        tolerance  = 1e-7
         
-        result     = newton(self.J,
-                            guess,
-                            tol=tolerance,
-                            maxiter=iter_limit,
-                            full_output=True)
+        try:
         
-        # Check method converged before reaching maxiter.
-        if np.any(np.invert(result[1])) == False: # Method converged!
-            solution = result[0]
-        else:
-            raise Exception("Solver did not converge")
+            result     = newton(self.J,
+                                guess,
+                                tol=tolerance,
+                                maxiter=iter_limit,
+                                full_output=True)
+            
+            # Check method converged before reaching maxiter.
+            if np.any(np.invert(result[1])) == False: # Method converged!
+                solution = result[0]
+            else:
+                raise Exception("Solver did not converge")
+                
+        except:
+            
+            try: # Try Newton method with Krylov inverse Jacobian approximation.
+                
+                solution     = newton_krylov(self.J, guess, maxiter=iter_limit,
+                                              f_tol=tolerance)
+                
+            except: # If everything failed, then use fsolve, which is slower but more stable.
+                
+                solution     = fsolve(self.J, guess, maxfev=iter_limit,
+                                      xtol=tolerance)
+
         
         self.qx_x0  = solution[:len(self.time_vec)]
         self.qy_x0  = solution[len(self.time_vec):2*len(self.time_vec)]
