@@ -63,7 +63,7 @@ Please be aware that:
 # Define Folder where to save data #
 ####################################
 
-save_plot_to    = './02_VSUAL_OUTPUT/'
+save_plot_to    = './VISUAL_OUTPUT/'
 
 
 
@@ -230,7 +230,7 @@ axs[1].set_ylabel('Relative velocity', fontsize=fs, labelpad=0.25)
 axs[1].set_xscale('log')
 axs[1].set_yscale('log')
 axs[1].grid()
-plt.savefig(save_plot_to + 'c01_FIGURE_DATA1.pdf', format='pdf', dpi=500)
+plt.savefig(save_plot_to + 'FIGURE_DATA1.pdf', format='pdf', dpi=500)
 
 plt.show()
 

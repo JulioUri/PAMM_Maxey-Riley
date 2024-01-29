@@ -42,7 +42,7 @@ Please be aware that:
 # Define Folder where to save data #
 ####################################
 
-save_plot_to    = './02_VSUAL_OUTPUT/'
+save_plot_to    = './VISUAL_OUTPUT/'
 
 
 
@@ -225,7 +225,7 @@ axs[1,1].set_ylim(-1.05, 1.0)
 axs[1,1].legend(loc='upper right', fontsize=fs)
 axs[1,1].grid()
 
-plt.savefig(save_plot_to + 'c01_FIGURE_COUETT.pdf', format='pdf', dpi=500)
+plt.savefig(save_plot_to + 'FIGURE_COUETTE.pdf', format='pdf', dpi=500)
 
 plt.show()
 

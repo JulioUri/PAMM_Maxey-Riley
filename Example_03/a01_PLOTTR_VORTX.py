@@ -89,7 +89,7 @@ def save_to_file(sol_v):
 # Define Folder where to save data #
 ####################################
 
-save_plot_to    = './02_VSUAL_OUTPUT/'
+save_plot_to    = './VISUAL_OUTPUT/'
 
 
 
@@ -332,7 +332,7 @@ axs[1].legend(loc='upper right', fontsize=fs, prop={'size':fs-2})
 #axs[1].xticks(fontsize=fs)
 axs[1].grid()
 
-plt.savefig(save_plot_to + 'c01_FIGURE_VORTEX.pdf',
+plt.savefig(save_plot_to + 'FIGURE_VORTEX.pdf',
             format='pdf', dpi=1200, bbox_inches='tight')
 
 plt.show()
