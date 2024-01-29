@@ -65,7 +65,7 @@ Please be aware that:
       file, whose class is imported.
 """
 
-print("\nThis script could take more than 1.5 h... Grab a coffee and your favourite scientific paper.\n\n")
+print("\nThis script could take up to 30 min... Grab a coffee and your favourite scientific paper.\n\n")
 
 ##################################
 # Define function to parallelise #
