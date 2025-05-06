@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: If you use this software, please cite both the article from preferred-citation and the software itself.
+authors:
+  - family-names: Urizarna-Carasa
+    given-names: Julio
+  - family-names: Ruprecht
+    given-names: Daniel   
+title: A Python toolbox for the numerical solution of the Maxey-Riley equation
+version: 3.0.0
+url: https://doi.org/10.1002/pamm.202200242
+doi: 10.1002/pamm.202200242
+date-released: '2024-01-29'
+preferred-citation:
+  type: article
+  authors:
+  - family-names: Urizarna-Carasa
+    given-names: Julio
+  - family-names: Ruprecht
+    given-names: Daniel
+  - family-names: von Kameke
+    given-names: Alexandra
+  - family-names: Padberg-Gehle
+    given-names: Kathrin
+  title: A Python toolbox for the numerical solution of the Maxey-Riley equation
+  doi: 10.1007/s00791-018-0296-z
+  url: https://doi.org/10.1007/s00791-018-0296-z
+  journal: "Proc. Appl. Math. Mech."
+  volume: 22
+  pages: e202200242
+  year: '2023'
+  conference: {}
+  publisher: {}
