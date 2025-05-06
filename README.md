@@ -1,0 +1,3 @@
+This repository contains the code accompanying the paper [Urizarna-Carasa, J., Ruprecht, D., von Kameke, A. and Padberg-Gehle, K. (2023), A Python toolbox for the numerical solution of the Maxey-Riley equation. Proc. Appl. Math. Mech., 22: e202200242](https://doi.org/10.1002/pamm.202200242).
+It provides a reimplementation and validation of the numerical method for the Maxey-Riley equation described in the paper 
+[Prasath SG, Vasan V, Govindarajan R. Accurate solution method for the Maxey–Riley equation, and the effects of Basset history. Journal of Fluid Mechanics. 2019;868:428-460.](https://dx.doi.org/10.1017/jfm.2019.194).
