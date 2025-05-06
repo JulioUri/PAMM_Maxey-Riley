@@ -22,8 +22,8 @@ preferred-citation:
   - family-names: Padberg-Gehle
     given-names: Kathrin
   title: A Python toolbox for the numerical solution of the Maxey-Riley equation
-  doi: 10.1007/s00791-018-0296-z
-  url: https://doi.org/10.1007/s00791-018-0296-z
+  doi: https://doi.org/10.1002/pamm.202200242
+  url: https://doi.org/10.1002/pamm.202200242
   journal: "Proc. Appl. Math. Mech."
   volume: 22
   pages: e202200242
