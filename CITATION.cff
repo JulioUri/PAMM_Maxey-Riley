@@ -7,8 +7,8 @@ authors:
     given-names: Daniel   
 title: A Python toolbox for the numerical solution of the Maxey-Riley equation
 version: 3.0.0
-url: https://doi.org/10.1002/pamm.202200242
-doi: 10.1002/pamm.202200242
+url: https://doi.org/10.5281/zenodo.10580901
+doi: 10.5281/zenodo.10580901
 date-released: '2024-01-29'
 preferred-citation:
   type: article
